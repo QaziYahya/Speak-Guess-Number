@@ -53,6 +53,13 @@ h1,
 
 @media (max-width: 600px) {
   .container {
-    transform: translateY(35rem);
+    width: 26rem;
+    transform: translateY(12rem);
+  }
+  .welcome {
+    font-size: 25px;
+  }
+  .press-to-play {
+    font-size: 20px;
   }
 }
