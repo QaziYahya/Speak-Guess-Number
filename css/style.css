@@ -1,0 +1,58 @@
+@import url('https://fonts.googleapis.com/css2?family=Almarai&family=Dosis&display=swap');
+* {
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: 'dosis';
+  background: #131010;
+}
+
+.icon {
+  display: none;
+  font-size: 12rem;
+  margin-bottom: 1.5rem;
+}
+
+.container {
+  width: 50rem;
+  margin: 0 auto;
+  text-align: center;
+  color: #fff;
+  transform: translateY(19rem);
+}
+
+h1,
+.you-said {
+  margin: 1rem;
+}
+
+.result {
+  display: none;
+  padding: 10px 15px;
+  border: 1px solid #fff;
+  margin: 1rem 0 1rem 0;
+}
+
+.you-said,
+.advice {
+  display: none;
+}
+
+.play-btn {
+  display: block;
+  padding: 0.6rem 2.5rem;
+  border: none;
+  border-radius: 5px;
+  margin-top: 0.4rem;
+  cursor: pointer;
+  outline: none;
+  margin: 1.5rem auto;
+}
+
+@media (max-width: 600px) {
+  .container {
+    transform: translateY(35rem);
+  }
+}
