@@ -1,6 +1,7 @@
 // The API
-var SpeechRecognition = SpeechRecognition || webkitSpeechRecognition;
-let recognition = new SpeechRecognition();
+window.SpeechRecognition =
+  window.SpeechRecognition || window.webkitSpeechRecognition;
+let recognition = new window.SpeechRecognition();
 
 class mainClass {
   constructor() {
@@ -13,6 +14,8 @@ class mainClass {
     this.advice = document.querySelector('.advice');
     this.playBtn = document.querySelector('.play-btn');
 
+    this.win;
+
     // This will hold Guessing Number
     this.guessNum;
 
@@ -21,6 +24,8 @@ class mainClass {
   }
 
   playGame() {
+    /* Initially User has not Won */
+    this.win = false;
     // Display the mic Icon
     this.icon.style.display = 'block';
     // Generate the guessing number
@@ -48,18 +53,19 @@ gameClass.playBtn.addEventListener('click', () => {
   gameClass.playGame();
 });
 
-/* Initially User has not Won */
-let win = false;
+// Listen for the result
+recognition.addEventListener('result', getResult);
 
-recognition.onend = function () {
-  /* If the user has not won then start the API again */
-  if (!win) {
+// Start the speech recognition again when it ends
+recognition.addEventListener('end', () => {
+  // If the user has not won yet then start the recognition again
+  if (!gameClass.win) {
     recognition.start();
   }
-};
+});
 
-// Do the following when result comes
-recognition.onresult = function (e) {
+// Get the resut
+function getResult() {
   // Get the result
   let result = event.results[0][0].transcript;
 
@@ -73,17 +79,16 @@ recognition.onresult = function (e) {
   /* If the result is a finite number then do the following */
   if (isFinite(result)) {
     /* The API returns the input in string format so here we are
-    changing it to int */
+     changing it to int */
     result = parseInt(result);
 
     /* If the result is = to the guess number then the user has won */
     if (result === gameClass.guessNum) {
       /* Since the user won so win = true */
-      win = true;
+      gameClass.win = true;
       gameClass.icon.style.display = 'none';
       gameClass.guessBetween.textContent = 'Congratulations! You Win!';
       gameClass.speakInto.textContent = 'The number was:';
-      // gameClass.result.textContent = gameClass.guessNum;
       gameClass.playBtn.textContent = 'Play Again';
       gameClass.playBtn.style.display = 'block';
       gameClass.advice.style.display = 'none';
@@ -109,4 +114,4 @@ recognition.onresult = function (e) {
     gameClass.speakInto.textContent = 'You Said:';
     gameClass.advice.textContent = 'This is not a valid number!';
   }
-};
+}
